@@ -211,14 +211,14 @@ primary:active, .open > .dropdown-toggle.btn-info {
 }
 
 .form-submit input:focus {
-    border-color: #fbcbbd;
+    border-color: #b3d4ad;
     outline: 0;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #fbcbbd;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(179, 212, 173, 1);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px #b3d4ad;
 }
 
 .jumbotron img {
-    max-width: 200px;
+    max-width: 150px;
 }
 
 .aa {
