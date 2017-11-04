@@ -6,10 +6,10 @@
 
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
 
-    <meta name="description" content="Composizioni floreali originali a domicilio a Milano">
+    <meta name="description" content="Florelite, il tuo nuovo servizio di consegna fiori a Milano da 29 euro, con consegna gratuita anche in giornata. Ogni settimana una nuova originale composizione, a numero limitato e con i fiori di stagione più belli.">
 
     <meta property="og:title" content="Florelite"/>
-    <meta property="og:description" content="Composizioni floreali originali a domicilio a Milano"/>
+    <meta property="og:description" content="Florelite, il tuo nuovo servizio di consegna fiori a Milano da 29 euro, con consegna gratuita anche in giornata. Ogni settimana una nuova originale composizione, a numero limitato e con i fiori di stagione più belli."/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="http://www.florelite.it"/>
     <meta property="og:image" content="http://www.florelite.it/img/logo.png"/>
@@ -18,14 +18,13 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/animate.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css"
-          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/wow.js"></script>
-    <script>
+    <script type="text/javascript">
         wow = new WOW(
             {
                 animateClass: 'animated',
@@ -33,6 +32,60 @@
             }
         );
         wow.init();
+
+        $(document).ready(function(){
+            ajaxMailChimpForm($("#mc-embedded-subscribe-form"), $("#subscription-status-modal"));
+            // Turn the given MailChimp form into an ajax version of it.
+            // If resultElement is given, the subscribe result is set as html to
+            // that element.
+            function ajaxMailChimpForm($form, $resultModalElement){
+                // Hijack the submission. We'll submit the form manually.
+                $form.submit(function(e) {
+                    e.preventDefault();
+                    if (!isValidEmail($form)) {
+                        displayModal($resultModalElement, "A valid email address must be provided.");
+                    } else {
+                        submitSubscribeForm($form, $resultModalElement);
+                    }
+                });
+            }
+            // Validate the email address in the form
+            function isValidEmail($form) {
+                var email = $form.find("input[type='email']").val();
+                var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+                return emailPattern.test(email);
+            }
+            // Submit the form with an ajax/jsonp request.
+            function submitSubscribeForm($form, $resultModalElement) {
+                $.ajax({
+                    type: "GET",
+                    url: $form.attr("action"),
+                    data: $form.serialize(),
+                    cache: false,
+                    dataType: "jsonp",
+                    jsonp: "c", // trigger MailChimp to return a JSONP response
+                    contentType: "application/json; charset=utf-8",
+                    error: function(error){
+                        // According to jquery docs, this is never called for cross-domain JSONP requests
+                    },
+                    success: function(data){
+                        if (data.result != "success") {
+                            if (data.msg && data.msg.indexOf("already subscribed") >= 0) {
+                                displayModal($resultModalElement, "Grazie! La tua email " + $form.find('input[type="email"]').val() + " è stata registrata con successo.");
+                            }
+                            displayModal($resultModalElement, "Oops! Qualcosa non ha funzionato.");
+                        } else {
+                            displayModal($resultModalElement, "Grazie! La tua email " + $form.find('input[type="email"]').val() + " è stata registrata con successo.");
+                        }
+                    }
+                });
+            }
+        });
+
+        function displayModal($resultModalElement, msg) {
+            var body = $resultModalElement.find('.modal-body').html(msg);
+            $resultModalElement.modal('toggle')
+        }
 
     </script>
 </head>
@@ -57,15 +110,17 @@
                             <div class="col-md-12">
 
                                 <div class="form-submit col-md-offset-3 col-md-6 ">
-                                    <form>
+                                    <form action="http://florelite.us17.list-manage.com/subscribe/post-json?u=c5ebd757f934edd55217dc809&id=e1da5fc0e8" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 
                                         <div class="form-group">
                                             <div class="input-group">
-                                                <input type="text" class="form-control"
-                                                       placeholder="Enter email address">
-                                                <span class="input-group-btn">
-                                              <button class="btn btn-info" type="button">invia</button>
-                                            </span>
+                                                    <input type="email" value="" name="EMAIL" class="email form-control" id="mce-EMAIL" placeholder="Email Address" required>
+                                                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_c5ebd757f934edd55217dc809_e1da5fc0e8" tabindex="-1" value=""></div>
+
+                                                    <span class="input-group-btn">
+                                                        <input type="submit" value="Invia" name="subscribe" id="mc-embedded-subscribe" class="button btn btn-info" />
+                                                    </span>
                                             </div>
                                         </div>
                                     </form>
@@ -76,10 +131,10 @@
                             <div class="aa">
                                 <h4>Nel frattempo, seguici anche su</h4>
                                 <ul class="social">
-                                    <li><a href="#"><i class="fa fa-instagram"
+                                    <li><a href="https://www.instagram.com/florelite.milano" target="_blank"><i class="fa fa-instagram"
                                                        aria-hidden="true"></i></a>
                                     </li>
-                                    <li><a href="#"><i class="fa fa-facebook"
+                                    <li><a href="https://www.facebook.com/florelite" target="_blank"><i class="fa fa-facebook"
                                                        aria-hidden="true"></i></a>
                                     </li>
                                 </ul>
@@ -93,6 +148,19 @@
 
 
 </div>
-
+<div class="modal fade" id="subscription-status-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 </body>
 </html>
