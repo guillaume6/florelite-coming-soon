@@ -72,8 +72,9 @@
                         if (data.result != "success") {
                             if (data.msg && data.msg.indexOf("already subscribed") >= 0) {
                                 displayModal($resultModalElement, "Grazie! La tua email " + $form.find('input[type="email"]').val() + " è stata registrata con successo.");
+                            } else {
+                                displayModal($resultModalElement, "Oops! Qualcosa non ha funzionato.");
                             }
-                            displayModal($resultModalElement, "Oops! Qualcosa non ha funzionato.");
                         } else {
                             displayModal($resultModalElement, "Grazie! La tua email " + $form.find('input[type="email"]').val() + " è stata registrata con successo.");
                         }
